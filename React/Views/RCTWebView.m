@@ -302,7 +302,14 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
       isEqualToString:@"true"
     ];
     if (!postMessageIsNative) {
-      RCTLogError(@"Setting onMessage on a WebView overrides existing values of window.postMessage, but a previous value was defined");
+      
+      // NOTE:
+      // Disabling this error message as it fires a red box error every time, and is mistakenly being
+      // triggered on the video player webview which has multiple iframes, and therefore webViewDidFinishLoad
+      // is called multiple times. Once the code below to re-weire window.postMessage is run, then this
+      // check will always fail and therefore the redbox error is triggered.
+
+      // RCTLogError(@"Setting onMessage on a WebView overrides existing values of window.postMessage, but a previous value was defined");
     }
     #endif
     NSString *source = [NSString stringWithFormat:
